@@ -1,0 +1,97 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description></description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <hudson.model.ParametersDefinitionProperty>
+      <parameterDefinitions>
+        <hudson.model.StringParameterDefinition>
+          <name>BASEURL</name>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>PASSWORD</name>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>TAGS</name>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+      </parameterDefinitions>
+    </hudson.model.ParametersDefinitionProperty>
+  </properties>
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@5.7.0">
+    <configVersion>2</configVersion>
+    <userRemoteConfigs>
+      <hudson.plugins.git.UserRemoteConfig>
+        <url>https://github.com/robertobertaccini/npm-playwright-cucumber</url>
+      </hudson.plugins.git.UserRemoteConfig>
+    </userRemoteConfigs>
+    <branches>
+      <hudson.plugins.git.BranchSpec>
+        <name>*/main</name>
+      </hudson.plugins.git.BranchSpec>
+    </branches>
+    <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+    <submoduleCfg class="empty-list"/>
+    <extensions/>
+  </scm>
+  <canRoam>true</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers/>
+  <concurrentBuild>false</concurrentBuild>
+  <builders>
+    <hudson.tasks.BatchFile>
+      <command>npm i</command>
+      <configuredLocalRules/>
+    </hudson.tasks.BatchFile>
+    <hudson.tasks.BatchFile>
+      <command>npx playwright install</command>
+      <configuredLocalRules/>
+    </hudson.tasks.BatchFile>
+    <hudson.tasks.BatchFile>
+      <command>npm run test --TAGS=&quot;%TAGS%&quot;</command>
+      <configuredLocalRules/>
+    </hudson.tasks.BatchFile>
+  </builders>
+  <publishers>
+    <net.masterthought.jenkins.CucumberReportPublisher plugin="cucumber-reports@5.8.5">
+      <fileIncludePattern>**/*.json</fileIncludePattern>
+      <fileExcludePattern></fileExcludePattern>
+      <jsonReportDirectory>test-results</jsonReportDirectory>
+      <reportTitle>Regression</reportTitle>
+      <failedStepsNumber>-1</failedStepsNumber>
+      <skippedStepsNumber>-1</skippedStepsNumber>
+      <pendingStepsNumber>-1</pendingStepsNumber>
+      <undefinedStepsNumber>-1</undefinedStepsNumber>
+      <failedScenariosNumber>-1</failedScenariosNumber>
+      <failedFeaturesNumber>-1</failedFeaturesNumber>
+      <failedStepsPercentage>0.0</failedStepsPercentage>
+      <skippedStepsPercentage>0.0</skippedStepsPercentage>
+      <pendingStepsPercentage>0.0</pendingStepsPercentage>
+      <undefinedStepsPercentage>0.0</undefinedStepsPercentage>
+      <failedScenariosPercentage>0.0</failedScenariosPercentage>
+      <failedFeaturesPercentage>0.0</failedFeaturesPercentage>
+      <buildStatus>UNCHANGED</buildStatus>
+      <stopBuildOnFailedReport>false</stopBuildOnFailedReport>
+      <failedAsNotFailingStatus>false</failedAsNotFailingStatus>
+      <skippedAsNotFailingStatus>false</skippedAsNotFailingStatus>
+      <pendingAsNotFailingStatus>false</pendingAsNotFailingStatus>
+      <undefinedAsNotFailingStatus>false</undefinedAsNotFailingStatus>
+      <trendsLimit>0</trendsLimit>
+      <sortingMethod>ALPHABETICAL</sortingMethod>
+      <customJsFiles></customJsFiles>
+      <customCssFiles></customCssFiles>
+      <mergeFeaturesById>false</mergeFeaturesById>
+      <mergeFeaturesWithRetest>false</mergeFeaturesWithRetest>
+      <hideEmptyHooks>false</hideEmptyHooks>
+      <skipEmptyJSONFiles>false</skipEmptyJSONFiles>
+      <expandAllSteps>false</expandAllSteps>
+      <classificationsFilePattern></classificationsFilePattern>
+    </net.masterthought.jenkins.CucumberReportPublisher>
+  </publishers>
+  <buildWrappers/>
+</project>

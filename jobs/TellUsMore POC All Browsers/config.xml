@@ -1,0 +1,66 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description></description>
+  <keepDependencies>false</keepDependencies>
+  <properties/>
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@5.7.0">
+    <configVersion>2</configVersion>
+    <userRemoteConfigs>
+      <hudson.plugins.git.UserRemoteConfig>
+        <url>https://github.com/robertobertaccini/npm-playwright.git</url>
+      </hudson.plugins.git.UserRemoteConfig>
+    </userRemoteConfigs>
+    <branches>
+      <hudson.plugins.git.BranchSpec>
+        <name>*/main</name>
+      </hudson.plugins.git.BranchSpec>
+    </branches>
+    <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+    <submoduleCfg class="empty-list"/>
+    <extensions/>
+  </scm>
+  <canRoam>true</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers/>
+  <concurrentBuild>false</concurrentBuild>
+  <builders>
+    <hudson.tasks.BatchFile>
+      <command>npm install</command>
+      <configuredLocalRules/>
+    </hudson.tasks.BatchFile>
+    <hudson.tasks.BatchFile>
+      <command>npx playwright install</command>
+      <configuredLocalRules/>
+    </hudson.tasks.BatchFile>
+    <hudson.tasks.BatchFile>
+      <command>SET TARGETURL=https://lab-07688-bos.lab-internal.pega.com/prweb&#xd;
+SET PASSWORD=Banana2025!&#xd;
+npx playwright test --reporter=html</command>
+      <configuredLocalRules/>
+    </hudson.tasks.BatchFile>
+  </builders>
+  <publishers>
+    <htmlpublisher.HtmlPublisher plugin="htmlpublisher@425">
+      <reportTargets>
+        <htmlpublisher.HtmlPublisherTarget>
+          <reportName>TellUsMore</reportName>
+          <reportDir>playwright-report/</reportDir>
+          <reportFiles>index.html</reportFiles>
+          <alwaysLinkToLastBuild>false</alwaysLinkToLastBuild>
+          <reportTitles>PlayWright Report</reportTitles>
+          <keepAll>false</keepAll>
+          <allowMissing>false</allowMissing>
+          <icon></icon>
+          <includes>**/*</includes>
+          <escapeUnderscores>true</escapeUnderscores>
+          <useWrapperFileDirectly>true</useWrapperFileDirectly>
+          <numberOfWorkers>0</numberOfWorkers>
+        </htmlpublisher.HtmlPublisherTarget>
+      </reportTargets>
+    </htmlpublisher.HtmlPublisher>
+  </publishers>
+  <buildWrappers/>
+</project>

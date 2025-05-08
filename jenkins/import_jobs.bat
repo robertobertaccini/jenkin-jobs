@@ -1,0 +1,1 @@
+java -jar jenkins-cli.jar -s http://admin:bertax@localhost:1111 create-job ImportedJob < config.xml

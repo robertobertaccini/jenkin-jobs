@@ -1,0 +1,1 @@
+java -Dhudson.model.DirectoryBrowserSupport.CSP="sandbox allow-scripts allow-popups allow-popups-to-escape-sandbox; style-src 'unsafe-inline' *;" -jar jenkins.war --httpPort=1111
